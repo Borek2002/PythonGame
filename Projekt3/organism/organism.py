@@ -1,3 +1,4 @@
+import random
 from abc import abstractmethod
 
 from Projekt3.point import Point
@@ -15,13 +16,67 @@ class Organism:
 
     def makeMove(self,point):
         self.world.getBoard()[self.point.getY()][self.point.getX()]=None
-        self.world.getBoard()[point.getY()][point.getX()]=None
+        self.world.getBoard()[point.getY()][point.getX()]=self
         self.point.set(point)
 
     def newPosition(self):
-        p=Point(self.point.getX(),self.point.getY())
-        
+        p = Point(self.point.getX(), self.point.getY())
+        canMove = [True, True, True, True]
+        if self.point.getY() == 0:
+            canMove[0] = False
+        if self.point.getY() == (self.world.worldHeight-1):
+            canMove[1] = False
+        if self.point.getX() == 0:
+            canMove[2] = False
+        if self.point.getX() == (self.world.worldWidth-1):
+            canMove[3] = False
+        while(True):
+            direction=random.randint(0,3)
+            if direction == 0 and canMove[direction] == True: # up
+                p.y-=1
+                return p
 
+            elif direction == 1 and canMove[direction] == True: #down
+                p.y +=1
+                return p
+
+            elif direction == 2 and canMove[direction] == True: #left
+                p.x -=1
+                return p
+
+            elif direction == 3 and canMove[direction] == True: #right
+                p.x+=1
+                return p
+
+
+
+    def findFreeField(self,organism):
+        chance=-1
+        p=Point(organism.point.getX(),organism.point.getY())
+        canMove=[True,True,True,True]
+        if self.point.getY()==0:
+            canMove[0]=False
+        if self.point.getY()==(self.world.worldHeight-1):
+            canMove[1]=False
+        if self.point.getX()==0:
+            canMove[2]=False
+        if self.point.getX()==(self.world.worldWidth-1):
+            canMove[3]=False
+        while chance!=3:
+            chance=random.randint(0,3)
+            if chance >= 3 and canMove[0] == True and self.world.getBoard()[p.getY() - 1][p.getX()] == None:
+                p.y-=1
+                return p
+            elif chance >= 2 and canMove[1] == True and self.world.getBoard()[p.getY() + 1][p.getX()] == None:
+                p.y+=1
+                return p
+            elif chance >= 1 and canMove[2] == True and self.world.getBoard()[p.getY()][p.getX()-1] == None:
+                p.x -=1
+                return p
+            elif chance >= 1 and canMove[3] == True and self.world.getBoard()[p.getY()][ p.getX()-1] == None:
+                p.x+=1
+                return p
+        return p
 
 
     def getInitiative(self):
@@ -51,5 +106,17 @@ class Organism:
         pass
 
     @abstractmethod
+    def getName(self):
+        pass
+
+    @abstractmethod
     def action(self):
+        pass
+
+    @abstractmethod
+    def collision(self,oc):
+        pass
+
+    @abstractmethod
+    def clone(self,p):
         pass
