@@ -36,7 +36,17 @@ class Animal(Organism):
                 self.world.comment.addComment("There's no open field to give birth "+oc.getName())
 
         elif oc.getName()=="Guarana":
-            print("Guarana")
+            self.setStrenght(self.getStrenght()+3)
+            self.world.removeOrganism(oc)
+            self.world.comment.addComment(self.getName() + " move from (x: " + str(self.point.getX()) + ", y: " + str(
+                self.point.getY()) + ") to (x: " + str(oc.point.getX()) + ", y: " + str(oc.point.getY()) + ")")
+            self.makeMove(oc.getPoint())
+            self.world.comment.addComment(self.getName()+" eat Guarana, new strenght "+str(self.getStrenght()))
+
+        elif oc.getName()=="Borscht" or oc.getName()=="Berries":
+            self.world.comment.addComment(oc.getName() + " kill " + self.getName())
+            self.world.removeOrganism(self)
+
         else:
             self.fight(oc)
 

@@ -1,6 +1,7 @@
 from point import Point
 import random
 from Projekt3.organism.animal import Wolf, Sheep, Fox, Turtle,Antylope
+from Projekt3.organism.plant import Grass, Dandelion, Guarana, PineBorscht, WolfBerries
 from point import Point
 
 from comment import Comment
@@ -18,6 +19,11 @@ class World:
         self.randomPlace(Fox(self,Point(-1,-1)))
         self.randomPlace(Turtle(self,Point(-1,-1)))
         self.randomPlace(Antylope(self,Point(-1,-1)))
+        self.randomPlace(Grass(self,Point(-1,-1)))
+        self.randomPlace(Dandelion(self,Point(-1,-1)))
+        self.randomPlace(Guarana(self,Point(-1,-1)))
+        self.randomPlace(PineBorscht(self,Point(-1,-1)))
+        self.randomPlace(WolfBerries(self,Point(-1,-1)))
 
     def makeTurn(self):
         self.turn+=1
@@ -26,10 +32,12 @@ class World:
                 self.organismList[i].setNewBorn(False)
         i=0
         while (i!=len(self.organismList)):
-            print("wee"+str(i))
-            self.organismList[i].action()
+            if self.organismList[i].getDie()==False:
+                self.organismList[i].action()
             i+=1
+        self.removeDieOrgnism()
         #dodac zmienna czy zyje i na konie ctury usuwac zabite ogrganismy zapsane w drugim pliku
+
     def addOrganism(self, other):
         i=0
         while(i!=len(self.organismList)):
@@ -49,10 +57,15 @@ class World:
         self.board[other.point.getY()][other.point.getX()]=None
         while(i!=len(self.organismList)):
             if self.organismList[i]==other:
-                self.organismList.pop(i)
-                print(i)
+                self.organismList[i].setDie(True)
                 break
             i+=1
+
+    def removeDieOrgnism(self):
+        for i in range(len(self.organismList)-1,-1,-1):
+            if self.organismList[i].getDie()==True:
+                self.organismList.pop(i)
+
 
     def randomPlace(self,newone):
             while(True):

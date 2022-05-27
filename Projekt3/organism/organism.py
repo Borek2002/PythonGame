@@ -13,6 +13,7 @@ class Organism:
         self.range=range
         self.age=age
         self.newBorn=newBorn
+        self.die=False
 
     def makeMove(self,point):
         self.world.getBoard()[self.point.getY()][self.point.getX()]=None
@@ -99,8 +100,18 @@ class Organism:
 
     def setNewBorn(self,born):
         self.newBorn=born
+
     def setRange(self,range):
         self.range=range
+
+    def getDie(self):
+        return self.die
+
+    def setStrenght(self,strenght):
+        self.strenght=strenght
+
+    def setDie(self,die):
+        self.die=die
     @abstractmethod
     def getColor(self):
         pass
