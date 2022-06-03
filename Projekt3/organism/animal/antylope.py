@@ -4,8 +4,8 @@ from .animal import Animal
 
 class Antylope (Animal):
 
-    def __init__(self,world,point):
-        super().__init__(world, point, 4, 4, 2, 1, True)
+    def __init__(self,world,point,strenght=4,age=1):
+        super().__init__(world, point, 4, strenght, 2, age, True)
 
     def getColor(self):
         return "#FFB148"

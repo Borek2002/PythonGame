@@ -43,7 +43,7 @@ class Animal(Organism):
             self.makeMove(oc.getPoint())
             self.world.comment.addComment(self.getName()+" eat Guarana, new strenght "+str(self.getStrenght()))
 
-        elif oc.getName()=="Borscht" or oc.getName()=="Berries":
+        elif (oc.getName()=="Borscht" and self.getName()!="CyberSheep") or oc.getName()=="Berries":
             self.world.comment.addComment(oc.getName() + " kill " + self.getName())
             self.world.removeOrganism(self)
 

@@ -4,8 +4,8 @@ from .plant import Plant
 
 class Dandelion (Plant):
 
-    def __init__(self,world,point):
-        super().__init__(world, point, 0, 0, 3, 1, True)
+    def __init__(self,world,point,strenght=0,age=1):
+        super().__init__(world, point, 0, strenght, 3, age, True)
 
     def getColor(self):
         return "#FDFF20"
